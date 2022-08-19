@@ -8,10 +8,12 @@ class ResultPage extends StatelessWidget {
   final bool overWeight;
   final bool underWeight;
   final bool rightWeight;
+  final int age;
   ResultPage(
       {required this.BMI,
       this.overWeight = false,
       this.underWeight = false,
+      this.age = 0,
       this.rightWeight = false});
 
   @override
@@ -58,45 +60,50 @@ class ResultPage extends StatelessWidget {
                 : '';
     return SafeArea(
       child: Scaffold(
-        body: Container(
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          height: size.height,
-          child: Column(
-            children: [
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: Icon(Icons.arrow_back_ios_new_rounded),
+        body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            height: size.height,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: 5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: Icon(Icons.arrow_back_ios_new_rounded),
+                        ),
+                        Text(
+                          'Result',
+                          style: TextStyle(fontSize: 30),
+                        ),
+                        SizedBox(
+                          width: 40,
+                        )
+                      ],
                     ),
-                    Text(
-                      'Result',
-                      style: TextStyle(fontSize: 30),
-                    ),
-                    SizedBox(
-                      width: 40,
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
-                  width: size.width * 0.8,
-                  height: size.height * 0.3,
-                  padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                    image: AssetImage('assets/images/grid.jpg'),
-                    fit: BoxFit.fill,
-                  )),
-                  child: SfSparkLineChart(
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    width: size.width * 0.8,
+                    height: size.height * 0.3,
+                    padding: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                      image: AssetImage('assets/images/grid.jpg'),
+                      fit: BoxFit.fill,
+                    )),
+                    child: SfSparkLineChart(
                       axisLineColor: Colors.transparent,
                       width: 5,
                       color: overWeight
@@ -118,74 +125,85 @@ class ResultPage extends StatelessWidget {
                         fontSize: 20,
                       ),
                       labelDisplayMode: SparkChartLabelDisplayMode.none,
-                      data: <double>[13.5, 18.5, BMI, 24.5, 28.5])),
-              Container(
-                padding: EdgeInsets.all(10),
-                height: size.height * 0.5,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Your BMI is ${BMI.toStringAsFixed(1)}, $supportinText",
-                      textAlign: TextAlign.justify,
+                      data: age <= 8
+                          ? <double>[9.5, 10.5, BMI, 17]
+                          : age <= 12 && age > 8
+                              ? <double>[11.5, 14.5, BMI, 18.5, 24.5]
+                              : age <= 18 && age > 12
+                                  ? <double>[13.5, 17.5, BMI, 24.5, 28.5]
+                                  : <double>[13.5, 18.5, BMI, 24.5, 28.5],
                     ),
-                    Text(
-                      "The normal BMI range for Adults is 18.5 - 24.9, Teenagers: Male (18.2 - 26.3), Female (17.6 - 26.1), Adolescents : Male (15 - 21.8), Female (14.8 - 22.5); while children of ages 8 below (13.8 - 17)",
-                      textAlign: TextAlign.justify,
-                    ),
-                    Link(
-                      uri: Uri.parse(workoutLink),
-                      target: LinkTarget.self,
-                      builder: (context, followLink) {
-                        return InkWell(
-                          onTap: followLink,
-                          child: Text(
-                            workoutText,
-                            textAlign: TextAlign.justify,
-                            style: TextStyle(color: Colors.blue),
-                          ),
-                        );
-                      },
-                    ),
-                    Link(
-                      uri: Uri.parse(dietLink),
-                      target: LinkTarget.self,
-                      builder: (context, followLink) {
-                        return InkWell(
-                          onTap: followLink,
-                          child: Text(
-                            dietText,
-                            textAlign: TextAlign.justify,
-                            style: TextStyle(color: Colors.blue),
-                          ),
-                        );
-                      },
-                    ),
-                    InkWell(
-                      onTap: () => Navigator.push(context,
-                          MaterialPageRoute(builder: (_) {
-                        return MyHomePage();
-                      })),
-                      child: Container(
-                        width: size.width * 0.9,
-                        padding: EdgeInsets.symmetric(vertical: 15),
-                        decoration: BoxDecoration(
-                          color: Colors.green,
-                          borderRadius: BorderRadius.circular(20),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    height: size.height * 0.5,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Your BMI is ${BMI.toStringAsFixed(1)}, $supportinText",
+                          textAlign: TextAlign.justify,
                         ),
-                        child: Center(
-                          child: Text(
-                            'Recalculate BMI',
-                            style: TextStyle(color: Colors.white, fontSize: 18),
-                          ),
+                        Text(
+                          "The normal BMI range for Adults is 18.5 - 24.9, Teenagers: Male (18.2 - 26.3), Female (17.6 - 26.1), Adolescents : Male (15 - 21.8), Female (14.8 - 22.5); while children of ages 8 below (13.8 - 17)",
+                          textAlign: TextAlign.justify,
                         ),
-                      ),
-                    )
-                  ],
-                ),
-              )
-            ],
+                        Link(
+                          uri: Uri.parse(workoutLink),
+                          target: LinkTarget.self,
+                          builder: (context, followLink) {
+                            return InkWell(
+                              onTap: followLink,
+                              child: Text(
+                                workoutText,
+                                textAlign: TextAlign.justify,
+                                style: TextStyle(color: Colors.blue),
+                              ),
+                            );
+                          },
+                        ),
+                        Link(
+                          uri: Uri.parse(dietLink),
+                          target: LinkTarget.self,
+                          builder: (context, followLink) {
+                            return InkWell(
+                              onTap: followLink,
+                              child: Text(
+                                dietText,
+                                textAlign: TextAlign.justify,
+                                style: TextStyle(color: Colors.blue),
+                              ),
+                            );
+                          },
+                        ),
+                        InkWell(
+                          onTap: () => Navigator.push(context,
+                              MaterialPageRoute(builder: (_) {
+                            return MyHomePage();
+                          })),
+                          child: Container(
+                            width: size.width * 0.9,
+                            padding: EdgeInsets.symmetric(vertical: 15),
+                            decoration: BoxDecoration(
+                              color: Colors.green,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Recalculate BMI',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 18),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
         ),
       ),

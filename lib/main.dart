@@ -30,8 +30,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  double weight = 60;
-  double height = 170;
+  double weight = 0;
+  double height = 0;
+  double heightInInches = 0;
   bool female = false;
 
   bool male = true;
@@ -43,11 +44,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   bool rightWeight = false;
 
-  TextEditingController weightText = TextEditingController(text: '70');
+  TextEditingController weightText = TextEditingController(text: '0');
 
-  TextEditingController ageText = TextEditingController(text: '22');
+  TextEditingController ageText = TextEditingController(text: '0');
 
-  TextEditingController heightText = TextEditingController(text: '180');
+  TextEditingController heightText = TextEditingController(text: '0');
+
+  TextEditingController heightText2 = TextEditingController(text: '0');
 
   // List of items in ourdropdown menu
   String dropdownValueHeight = 'cm';
@@ -255,90 +258,225 @@ class _MyHomePageState extends State<MyHomePage> {
                   const SizedBox(
                     height: 10,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        width: size.width * 0.6,
-                        // padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).brightness == Brightness.dark
-                              ? Colors.white
-                              : Colors.grey[700],
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Center(
-                          child: Container(
-                            width: size.width * 0.3,
-                            child: TextFormField(
-                              decoration:
-                                  InputDecoration(border: InputBorder.none),
-                              textAlign: TextAlign.center,
-                              controller: heightText,
-                              style: TextStyle(
-                                  color: Theme.of(context).brightness ==
-                                          Brightness.dark
-                                      ? Colors.black
-                                      : Colors.white),
-
-                              // initialValue: weight.toString(),
-
-                              keyboardType: TextInputType.number,
-                              onChanged: (value) {
-                                height = double.parse(value);
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 10, horizontal: 3),
-                        // decoration: BoxDecoration(
-                        //     border: Border.all(
-                        //       color: Theme.of(context).brightness == Brightness.dark
-                        //           ? Colors.white
-                        //           : Colors.black,
-                        //     ),
-                        //     borderRadius: BorderRadius.circular(20)),
-                        width: size.width * 0.2,
-                        child: Row(
+                  dropdownValueHeight == 'feet'
+                      ? Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            // Text(
-                            //   'CM',
-                            //   style: TextStyle(),
-                            // ),
-                            DropdownButton(
-                              // Initial Value
-                              value: dropdownValueHeight,
-
-                              // Down Arrow Icon
-                              icon: const Icon(Icons.keyboard_arrow_down),
-
-                              // Array list of items
-                              items: itemsHeight.map((String items) {
-                                return DropdownMenuItem(
-                                  value: items,
-                                  child: Text(
-                                    items,
-                                    textAlign: TextAlign.center,
+                            Column(
+                              children: [
+                                Container(
+                                  width: size.width * 0.4,
+                                  // padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.dark
+                                        ? Colors.white
+                                        : Colors.grey[700],
+                                    borderRadius: BorderRadius.circular(20),
                                   ),
-                                );
-                              }).toList(),
-                              // After selecting the desired option,it will
-                              // change button value to selected value
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  dropdownValueHeight = newValue!;
-                                });
-                              },
+                                  child: Center(
+                                    child: Container(
+                                      width: size.width * 0.3,
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                            border: InputBorder.none),
+                                        textAlign: TextAlign.center,
+                                        controller: heightText,
+                                        style: TextStyle(
+                                            color:
+                                                Theme.of(context).brightness ==
+                                                        Brightness.dark
+                                                    ? Colors.black
+                                                    : Colors.white),
+
+                                        // initialValue: weight.toString(),
+
+                                        keyboardType: TextInputType.number,
+                                        onChanged: (value) {
+                                          height = double.parse(value);
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Text('feet')
+                              ],
                             ),
+                            Column(
+                              children: [
+                                Container(
+                                  width: size.width * 0.2,
+                                  // padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.dark
+                                        ? Colors.white
+                                        : Colors.grey[700],
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Center(
+                                    child: Container(
+                                      width: size.width * 0.3,
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                            border: InputBorder.none),
+                                        textAlign: TextAlign.center,
+                                        controller: heightText2,
+                                        style: TextStyle(
+                                            color:
+                                                Theme.of(context).brightness ==
+                                                        Brightness.dark
+                                                    ? Colors.black
+                                                    : Colors.white),
+
+                                        // initialValue: weight.toString(),
+
+                                        keyboardType: TextInputType.number,
+                                        onChanged: (value) {
+                                          heightInInches = double.parse(value);
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Text('inches')
+                              ],
+                            ),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 3),
+                              // decoration: BoxDecoration(
+                              //     border: Border.all(
+                              //       color: Theme.of(context).brightness == Brightness.dark
+                              //           ? Colors.white
+                              //           : Colors.black,
+                              //     ),
+                              //     borderRadius: BorderRadius.circular(20)),
+                              width: size.width * 0.2,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  // Text(
+                                  //   'CM',
+                                  //   style: TextStyle(),
+                                  // ),
+                                  DropdownButton(
+                                    // Initial Value
+                                    value: dropdownValueHeight,
+
+                                    // Down Arrow Icon
+                                    icon: const Icon(Icons.keyboard_arrow_down),
+
+                                    // Array list of items
+                                    items: itemsHeight.map((String items) {
+                                      return DropdownMenuItem(
+                                        value: items,
+                                        child: Text(
+                                          items,
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      );
+                                    }).toList(),
+                                    // After selecting the desired option,it will
+                                    // change button value to selected value
+                                    onChanged: (String? newValue) {
+                                      setState(() {
+                                        dropdownValueHeight = newValue!;
+                                      });
+                                    },
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              width: size.width * 0.6,
+                              // padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).brightness ==
+                                        Brightness.dark
+                                    ? Colors.white
+                                    : Colors.grey[700],
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Center(
+                                child: Container(
+                                  width: size.width * 0.3,
+                                  child: TextFormField(
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none),
+                                    textAlign: TextAlign.center,
+                                    controller: heightText,
+                                    style: TextStyle(
+                                        color: Theme.of(context).brightness ==
+                                                Brightness.dark
+                                            ? Colors.black
+                                            : Colors.white),
+
+                                    // initialValue: weight.toString(),
+
+                                    keyboardType: TextInputType.number,
+                                    onChanged: (value) {
+                                      height = double.parse(value);
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 3),
+                              // decoration: BoxDecoration(
+                              //     border: Border.all(
+                              //       color: Theme.of(context).brightness == Brightness.dark
+                              //           ? Colors.white
+                              //           : Colors.black,
+                              //     ),
+                              //     borderRadius: BorderRadius.circular(20)),
+                              width: size.width * 0.2,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  // Text(
+                                  //   'CM',
+                                  //   style: TextStyle(),
+                                  // ),
+                                  DropdownButton(
+                                    // Initial Value
+                                    value: dropdownValueHeight,
+
+                                    // Down Arrow Icon
+                                    icon: const Icon(Icons.keyboard_arrow_down),
+
+                                    // Array list of items
+                                    items: itemsHeight.map((String items) {
+                                      return DropdownMenuItem(
+                                        value: items,
+                                        child: Text(
+                                          items,
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      );
+                                    }).toList(),
+                                    // After selecting the desired option,it will
+                                    // change button value to selected value
+                                    onChanged: (String? newValue) {
+                                      setState(() {
+                                        dropdownValueHeight = newValue!;
+                                      });
+                                    },
+                                  ),
+                                ],
+                              ),
+                            )
                           ],
                         ),
-                      )
-                    ],
-                  ),
                   const SizedBox(
                     height: 20,
                   ),
@@ -385,6 +523,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       calcBMI(
                         weight: weight,
                         height: height,
+                        heightInInches: heightInInches,
                       );
                     },
                     child: Container(
@@ -414,6 +553,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void calcBMI({
     double weight = 0,
     double height = 0,
+    double heightInInches = 0,
   }) {
     if (dropdownValueHeight == 'Inch') {
       height = height / 39.37;
@@ -426,8 +566,13 @@ class _MyHomePageState extends State<MyHomePage> {
     }
     if (dropdownValueHeight == 'feet') {
       print(height);
+      print(heightInInches);
+      heightInInches = heightInInches / 39.37;
       height = height * 0.305;
+      height = height + heightInInches;
       print(height.runtimeType);
+      print(height);
+      print(heightInInches);
     }
     height = height * height;
     BMI = weight / height;
@@ -438,6 +583,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return ResultPage(
               BMI: BMI,
               underWeight: true,
+              age: age,
             );
           }));
         } else if (BMI > 17) {
@@ -445,6 +591,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return ResultPage(
               BMI: BMI,
               overWeight: true,
+              age: age,
             );
           }));
         } else {
@@ -452,6 +599,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return ResultPage(
               BMI: BMI,
               rightWeight: true,
+              age: age,
             );
           }));
         }
@@ -461,6 +609,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return ResultPage(
               BMI: BMI,
               underWeight: true,
+              age: age,
             );
           }));
         } else if (BMI > 21.8) {
@@ -468,6 +617,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return ResultPage(
               BMI: BMI,
               overWeight: true,
+              age: age,
             );
           }));
         } else {
@@ -475,6 +625,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return ResultPage(
               BMI: BMI,
               rightWeight: true,
+              age: age,
             );
           }));
         }
@@ -484,6 +635,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return ResultPage(
               BMI: BMI,
               underWeight: true,
+              age: age,
             );
           }));
         } else if (BMI > 26.3) {
@@ -491,6 +643,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return ResultPage(
               BMI: BMI,
               overWeight: true,
+              age: age,
             );
           }));
         } else {
@@ -498,6 +651,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return ResultPage(
               BMI: BMI,
               rightWeight: true,
+              age: age,
             );
           }));
         }
@@ -507,6 +661,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return ResultPage(
               BMI: BMI,
               underWeight: true,
+              age: age,
             );
           }));
         } else if (BMI > 24.9) {
@@ -514,6 +669,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return ResultPage(
               BMI: BMI,
               overWeight: true,
+              age: age,
             );
           }));
         } else {
@@ -521,6 +677,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return ResultPage(
               BMI: BMI,
               rightWeight: true,
+              age: age,
             );
           }));
         }
@@ -532,6 +689,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return ResultPage(
               BMI: BMI,
               underWeight: true,
+              age: age,
             );
           }));
         } else if (BMI > 17) {
@@ -539,6 +697,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return ResultPage(
               BMI: BMI,
               overWeight: true,
+              age: age,
             );
           }));
         } else {
@@ -546,6 +705,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return ResultPage(
               BMI: BMI,
               rightWeight: true,
+              age: age,
             );
           }));
         }
@@ -555,6 +715,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return ResultPage(
               BMI: BMI,
               underWeight: true,
+              age: age,
             );
           }));
         } else if (BMI > 22.5) {
@@ -562,6 +723,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return ResultPage(
               BMI: BMI,
               overWeight: true,
+              age: age,
             );
           }));
         } else {
@@ -569,6 +731,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return ResultPage(
               BMI: BMI,
               rightWeight: true,
+              age: age,
             );
           }));
         }
@@ -578,6 +741,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return ResultPage(
               BMI: BMI,
               underWeight: true,
+              age: age,
             );
           }));
         } else if (BMI > 26.1) {
@@ -585,6 +749,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return ResultPage(
               BMI: BMI,
               overWeight: true,
+              age: age,
             );
           }));
         } else {
@@ -592,6 +757,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return ResultPage(
               BMI: BMI,
               rightWeight: true,
+              age: age,
             );
           }));
         }
@@ -601,6 +767,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return ResultPage(
               BMI: BMI,
               underWeight: true,
+              age: age,
             );
           }));
         } else if (BMI > 24.9) {
@@ -608,6 +775,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return ResultPage(
               BMI: BMI,
               overWeight: true,
+              age: age,
             );
           }));
         } else {
@@ -615,6 +783,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return ResultPage(
               BMI: BMI,
               rightWeight: true,
+              age: age,
             );
           }));
         }
